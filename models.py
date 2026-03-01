@@ -15,7 +15,7 @@ class UserAge(BaseModel):
 
 class Feedback(BaseModel):
     name: str = Field(..., min_lenght=2, max_lenght=50, description="Имя от 2 до 50 символов")
-    massage: str = Field(..., min_lenght=10, max_lenght=500, description="Сообщение от 10 до 500 символов")
+    message: str = Field(..., min_lenght=10, max_lenght=500, description="Сообщение от 10 до 500 символов")
 
     @field_validator('message')
     @classmethod

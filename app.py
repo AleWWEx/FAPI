@@ -1,4 +1,5 @@
-from fastapi import FastAPI, FileResponse, HTTPException
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from models import User, UserAge, Feedback, CalcInput
 from typing import List
 
@@ -26,7 +27,7 @@ async def calculate(calc: CalcInput):
 #Задание 1.4
 @app.get("/users")
 async def get_user():
-    user = User(name="Ваше Имя и Фамилия", id=1)
+    user = User(name="Айриев Александр", id=1)
     return user
 
 # --- Задание 1.5 ---
