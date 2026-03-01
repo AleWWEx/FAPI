@@ -39,7 +39,7 @@ async def check_adult(user: UserAge):
         "is_adult": is_adult
     }
 
-# --- Задание 2.1 и 2.2 ---
+#Задание 2.1 и 2.2
 @app.post("/feedback")
 async def submit_feedback(feedback: Feedback):
     feedbacks_storage.append(feedback)
