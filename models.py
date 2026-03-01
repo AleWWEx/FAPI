@@ -1,17 +1,28 @@
-from fastapi import FastAPI, FileResponse, HTTPException
-from models import User, UserAge, Feedback, CalcInput
-from typing import List
+from pydantic import BaseModel, Field, field_validator
+from typing import Optional
 
-app = FastAPI()
-#Задание 2.1
-feedbacks_storage: List[Feedback] = []
+class User (BaseModel):
+    name: str
+    id: int
 
-#Задание 1.1
-@app.get("/")
-async def root():
-    return {"message": "Добро пожаловать в моё приложение FastAPI!"}
+class CalcInput(BaseModel):
+    num1: float
+    num2: float
 
-#Задание 1.2
-@app.get("/html")
-async def read_html():
-    return FileResponse('index.html')
+class UserAge(BaseModel):
+    name: str
+    age: int
+
+class Feedback(BaseModel):
+    name: str = Field(..., min_lenght=2, max_lenght=50, description="Имя от 2 до 50 символов")
+    massage: str = Field(..., min_lenght=10, max_lenght=500, description="Сообщение от 10 до 500 символов")
+
+    @field_validator('message')
+    @classmethod
+    def check_banned_words(cls, v):
+        banned_words = ["кринж", "рофл", "вайб"]
+        v_lower = v.lower()
+        for word in banned_words:
+            if word in v_lower:
+                raise ValueError("Использование недопустимых слов")
+        return v
